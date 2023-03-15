@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+    <style>
+        .profile {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    </style>
+    <div class="profile">
+        <div class="user-auth">
+            <div>Username: {{ user.getUsername() }}</div>
+            <div>Email: {{ user.getEmail() }}</div>
+        </div>
+        <div class="user-info">
+            {% if info.getBio() is defined %}
+                <div>BIO: {{ info.getBio() }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

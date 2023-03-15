@@ -1,0 +1,45 @@
+<style>
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15%;
+    }
+
+    header .header-brand .brand-item {
+        display: inline-block;
+        padding: 0 .5em;
+    }
+
+    header .header-brand .brand-item.brand-logo {
+        display: none;
+    }
+
+    header .header-links {
+        display: flex;
+        flex-direction: row;
+        column-gap: 30px;
+    }
+</style>
+<header>
+    <div class="header-brand">
+        <div class="brand-item brand-logo">
+            <a href="#">
+                <img src="" alt="">
+            </a>
+        </div>
+        <div class="brand-item brand-title">
+            <a href="{{ path('app_route_home') }}">Communicate</a>
+        </div>
+    </div>
+    <div class="header-links">
+        <div class="link-item">
+            <a href="{{ path('app_route_users') }}">Пользователи</a>
+        </div>
+        <div class="link-item">
+            <a href="{{ path('app_route_profile') }}">Профиль</a>
+        </div>
+        <div>
+            <a href="{{ path('app_route_logout') }}">Выйти</a>
+        </div>
+    </div>
+</header>

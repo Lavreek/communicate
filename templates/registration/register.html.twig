@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'no-auth.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
@@ -19,4 +19,5 @@
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    <a href="{{ path('app_route_login') }}">Войти</a>
 {% endblock %}
