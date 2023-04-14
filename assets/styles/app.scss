@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    height: 70px;
+    min-height: 70px;
+    box-shadow: 0 0 30px -20px rgba(0, 0, 0);
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 15%;
+        height: 100%;
+
+        .header-brand {
+            .brand-item {
+                display: inline-block;
+                padding: 0 .5em;
+
+                .brand-logo {
+                    display: none;
+                }
+            }
+        }
+        .header-links {
+            display: flex;
+            flex-direction: row;
+            column-gap: 30px;
+        }
+    }
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "./sign-in/sign-in";

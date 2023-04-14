@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ class LogoutController extends AbstractController
     #[Route('/logout', name: 'app_route_logout')]
     public function index(): Response
     {
-        return $this->render('logout/index.html.twig', [
+        return $this->render('logout/dialogs.html.twig', [
             'controller_name' => 'LogoutController',
         ]);
     }

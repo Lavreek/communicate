@@ -1,0 +1,10 @@
+{% extends 'profile/index.html.twig' %}
+
+{% block body %}
+    {% if control == true %}
+        {% block control %}
+            <a href="{{ path('app_route_dialog_find_page', {partner_id: user.getId()}) }}">Написть сообщение</a>
+        {% endblock %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

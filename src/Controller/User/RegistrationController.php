@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
-use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Entity\Profile\Profiles;
+use App\Entity\User\Account;
+use App\Entity\User\Profile;
+use App\Form\User\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,10 +25,10 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_route_register')]
+    #[Route('/register', name: 'app_user_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
+        $user = new Account();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -45,6 +45,14 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $profile = new Profile();
+
+            $profile->setCreated(new \DateTime(date('Y-m-d H:i:s')));
+            $profile->setUId($user->getId());
+
+            $entityManager->persist($profile);
+            $entityManager->flush();
+
             // generate a signed url and email it to the user
 //            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
 //                (new TemplatedEmail())
@@ -55,7 +63,7 @@ class RegistrationController extends AbstractController
 //            );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_route_login');
+            return $this->redirectToRoute('app_user_login');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -68,7 +76,7 @@ class RegistrationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
+        // validate email confirmation link, sets Account::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
@@ -80,6 +88,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_user_register');
     }
 }

@@ -1,23 +1,30 @@
 {% extends 'no-auth.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Регистрация{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
-
+<main class="form-signin w-100 m-auto text-center">
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="mb-4" viewBox="0 0 16 16">
+            <path d="M4.978.855a.5.5 0 1 0-.956.29l.41 1.352A4.985 4.985 0 0 0 3 6h10a4.985 4.985 0 0 0-1.432-3.503l.41-1.352a.5.5 0 1 0-.956-.29l-.291.956A4.978 4.978 0 0 0 8 1a4.979 4.979 0 0 0-2.731.811l-.29-.956z"/>
+            <path d="M13 6v1H8.5v8.975A5 5 0 0 0 13 11h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 1 0 1 0v-.5a1.5 1.5 0 0 0-1.5-1.5H13V9h1.5a.5.5 0 0 0 0-1H13V7h.5A1.5 1.5 0 0 0 15 5.5V5a.5.5 0 0 0-1 0v.5a.5.5 0 0 1-.5.5H13zm-5.5 9.975V7H3V6h-.5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 0-1 0v.5A1.5 1.5 0 0 0 2.5 7H3v1H1.5a.5.5 0 0 0 0 1H3v1h-.5A1.5 1.5 0 0 0 1 11.5v.5a.5.5 0 1 0 1 0v-.5a.5.5 0 0 1 .5-.5H3a5 5 0 0 0 4.5 4.975z"/>
+        </svg>
+        <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+        {{ revertFormFloating(form_row(registrationForm.email)) }}
 
-        <button type="submit" class="btn">Register</button>
+        {{ revertFormFloating(form_row(registrationForm.username)) }}
+        {{ revertFormFloating(form_row(registrationForm.plainPassword)) }}
+        <div class="py-4">
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+        </div>
+        <input type="hidden" name="_target_path" value="/login">
     {{ form_end(registrationForm) }}
-    <a href="{{ path('app_route_login') }}">Войти</a>
+    <div class="py-4">
+        <a class="text-muted" href="{{ path('app_user_login') }}" style="text-decoration: none;">Нажмите здесь<br> чтобы войти</a>
+    </div>
+</main>
 {% endblock %}

@@ -3,7 +3,20 @@
 {% block title %}Hello UsersController!{% endblock %}
 
 {% block body %}
+    <style>
+        .user-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .user-list .list-item {
+            width: 100%;
+        }
+    </style>
+    <div class="user-list">
     {% for i in users %}
-        {{ i.getUsername() }}
+        <div class="list-item">
+            <a href="{{ path('app_route_profile_page', {id: i.getId()}) }}">{{ i.getUsername() }}</a>
+        </div>
     {% endfor %}
+    </div>
 {% endblock %}

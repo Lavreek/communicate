@@ -9,15 +9,18 @@
             grid-template-columns: repeat(2, 1fr);
         }
     </style>
+    {% block control %}{% endblock %}
     <div class="profile">
         <div class="user-auth">
+            {{ form_start(form_user) }}
+            {{ form_end(form_user) }}
+
             <div>Username: {{ user.getUsername() }}</div>
             <div>Email: {{ user.getEmail() }}</div>
         </div>
         <div class="user-info">
-            {% if info.getBio() is defined %}
-                <div>BIO: {{ info.getBio() }}</div>
-            {% endif %}
+            {{ form_start(form_profile) }}
+            {{ form_end(form_profile) }}
         </div>
     </div>
 {% endblock %}
