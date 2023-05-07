@@ -1,30 +1,29 @@
-<header>
-    <div class="header-container">
-        <div class="header-brand">
-            <div class="brand-item brand-logo">
-                <a href="#">
-                    <img src="" alt="">
-                </a>
-            </div>
-            <div class="brand-item brand-title">
-                <h5>
-                    <a href="{{ path('app_home') }}">Communicate</a>
-                </h5>
-            </div>
-        </div>
-        <div class="header-links">
-            {#        <div class="link-item">#}
-            {#            <a href="{{ path('app_route_dialogs') }}">Диалоги</a>#}
-            {#        </div>#}
-            {#        <div class="link-item">#}
-            {#            <a href="{{ path('app_route_users') }}">Пользователи</a>#}
-            {#        </div>#}
-            <div class="link-item">
-                <a href="{{ path('app_profile') }}">Профиль</a>
-            </div>
-            {#        <div>#}
-            {#            <a href="{{ path('app_route_logout') }}">Выйти</a>#}
-            {#        </div>#}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home') }}">Communicate</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_profile') }}">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_users') }}">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_dialogs') }}">Диалоги</a>
+                </li>
+            </ul>
+            <form class="me-2" role="search" style="display: none">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            </form>
+            <a class="btn btn-outline-light" href="{{ path('app_user_logout') }}">Покинуть профиль</a>
         </div>
     </div>
-</header>
+</nav>

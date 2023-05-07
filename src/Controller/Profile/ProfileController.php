@@ -2,10 +2,9 @@
 
 namespace App\Controller\Profile;
 
-use App\Entity\Profile\Profiles;
 use App\Entity\User\Account;
-use App\Form\Profile\ProfileType;
-use App\Form\User\AccountType;
+use App\Entity\User\Profile;
+use App\Form\User\ProfileType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,28 +14,44 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function getProfile(Request $request, ManagerRegistry $registry): Response
+    public function profile(Request $request, ManagerRegistry $registry): Response
     {
-        $profile = $this->createForm(ProfileType::class);
-        $profile->handleRequest($request);
-
-        if ($profile->isSubmitted() && $profile->isValid()) {
-
-        }
-
-        $user = $this->createForm(AccountType::class);
-        $user->handleRequest($request);
-
-        if ($user->isSubmitted() && $user->isValid()) {
-
-        }
-        $account = $this->getUser();
-        $info = $registry->getRepository(Profiles::class)->findOneBy(['user_id' => $user->getId()]);
+        $profile = $registry->getRepository(Profile::class)->findOneBy(['u_id' => $this->getUser()->getId()]);
 
         return $this->render('profile/index.html.twig', [
-            'form-profile' => $profile,
-            'form-user' => $user,
-            'account' => $account,
+            'profile' => $profile,
+        ]);
+    }
+
+    #[Route('/profile/edit', name: 'app_profile_edit')]
+    public function profileEdit(Request $request, ManagerRegistry $registry): Response
+    {
+        $profileRepo = $registry->getRepository(Profile::class);
+        $profileForm = $this->createForm(ProfileType::class);
+        $profileForm->handleRequest($request);
+
+        /** @var Profile $profile */
+        $profile = $profileRepo->findOneBy(['u_id' => $this->getUser()->getId()]);
+
+        if ($profileForm->isSubmitted() and $profileForm->isValid()) {
+            /** @var Profile $task */
+            $task = $profileForm->getData();
+
+            $profile->setFirstname($task->getFirstname());
+            $profile->setSecondname($task->getSecondname());
+            $profile->setBirthday($task->getBirthday());
+
+            $profileRepo->save($profile, true);
+
+            return $this->redirectToRoute('app_profile');
+        }
+
+        if (!$profileForm->isSubmitted()) {
+            $profileForm->setData($profile);
+        }
+
+        return $this->render('profile/edit.html.twig', [
+            'profile' => $profileForm->createView(),
         ]);
     }
 

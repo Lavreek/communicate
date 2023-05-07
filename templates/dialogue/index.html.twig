@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Диалоги{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="d-flex flex-column w-50 justify-content-center align-items-center mx-auto">
+        {% if profiles|length > 0 %}
+            {% for id in profiles %}
+                {{ getProfileCard(id) | raw }}
+            {% endfor %}
+        {% else %}
+            <p>Диалогов ещё не начато :(</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

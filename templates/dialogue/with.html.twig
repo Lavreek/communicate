@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set user = app.user %}
+    <div class="container">
+        <div class="d-flex flex-row w-100">
+            <div class="container w-25">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="me-3" style="background: #e2e2e2; border-radius: .375rem; width: 32px; height: 32px;"></div>
+                            <div>{{ user.getUsername() }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-50 justify-content-between">
+                <div class="container container-messages h-75" style="min-height: 75vh; max-height: 75vh; overflow-y: auto;">
+                    {% for message in messages %}
+                        {% if message.getFromUid() == app.user.getId() %}
+                            <div id="message-{{ message.getId() }}" class="card w-75 mb-3">
+                                <div class="px-2">
+                                    <p>{{ getMessage(message.getMessageId()) }}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div id="message-{{ message.getId() }}" style="margin-left: 25%;" class="card w-75 mb-3">
+                                <div class="px-2">
+                                    <p>{{ getMessage(message.getMessageId()) }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="card border-0">
+                    <div class="card-body">
+                        {{ form_start(sending) }}
+                            {{ form_row(sending.vis, {'attr' : {'value' : vis.getId() }}) }}
+                        {{ form_end(sending) }}
+                    </div>
+                </div>
+            </div>
+            <div class="container w-25">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="me-3" style="background: #e2e2e2; border-radius: .375rem; width: 32px; height: 32px;"></div>
+                            <div>{{ vis.getUsername() }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

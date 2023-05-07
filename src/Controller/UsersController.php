@@ -15,7 +15,7 @@ class UsersController extends AbstractController
     {
         $users = $registry->getRepository(Account::class)->findAll();
 
-        return $this->render('users/dialogs.html.twig', [
+        return $this->render('users/list.html.twig', [
             'users' => $users,
         ]);
     }

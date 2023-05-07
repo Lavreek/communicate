@@ -6,6 +6,8 @@
     <title>{% block title %}{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
+
+        <link rel="stylesheet" href="{{ asset('/build/css/sign-in/sign-in.css') }}">
     {% endblock %}
 
     {% block javascripts %}

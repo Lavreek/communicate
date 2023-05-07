@@ -13,19 +13,57 @@ import './bootstrap';
 
 const $ = require('jquery');
 
-$('form[name=send_messages]').submit(function (e) {
-    e.preventDefault();
+require('jquery-ui/dist/jquery-ui');
+require('js-datepicker/src/datepicker');
 
-    var form = $(this);
-    var actionUrl = form.attr('action');
+import './scripts/FormSender'
 
-    $.ajax({
-        type: "POST",
-        url: actionUrl,
-        data: form.serialize(), // serializes the form's elements.
-        success: function(data)
-        {
-            alert(data); // show response from the php script.
-        }
+$(document).ready(function () {
+    $('#profile_birthday').datepicker({
+        dateFormat : 'yy-mm-dd'
     });
-})
+
+    if ($('.container-messages') !== null) {
+        let div = $('.container-messages');
+
+        div.animate({
+            scrollTop: div[0].scrollHeight
+        }, 1000);
+
+        setInterval(() => {
+            $.ajax({
+                method: 'POST',
+                url: '/api/message/get',
+                data: "url=" + document.location.href,
+
+                success: function (response) {
+                    for (let i = 0; i < response.messages.length; i++) {
+                        let message = response.messages[i];
+
+                        if ($('#message-' + message.id).length < 1) {
+                            if (message.from === "user") {
+                                $('.container-messages').append("<div id='message-"+ message.id  + "' class=\"card w-75 mb-3\"><div class=\"px-2\"><p>" + message.text + "</p></div></div>");
+
+                                let div = $('.container-messages');
+
+                                div.animate({
+                                    scrollTop: div[0].scrollHeight
+                                }, 1000);
+
+                            } else if (message.from === "vis") {
+                                $('.container-messages').append("<div id='message-"+ message.id + "' style='margin-left: 25%;' class=\"card w-75 mb-3\"><div class=\"px-2\"><p>" + message.text + "</p></div></div>");
+
+                                let div = $('.container-messages');
+
+                                div.animate({
+                                    scrollTop: div[0].scrollHeight
+                                }, 1000);
+                            }
+                        }
+                    }
+                }
+            });
+        }, 1000)
+    }
+});
+

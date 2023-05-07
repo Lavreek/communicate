@@ -75,7 +75,7 @@ Encore
     .copyFiles({
         from: './assets/styles/sign-in',
         to: 'css/sign-in/[path][name].[ext]',
-        pattern: /\.(css|CSS|scss|SCSS)$/
+        pattern: /\.(css|CSS)$/
     })
 ;
 

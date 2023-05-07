@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Профиль{% endblock %}
 
 {% block body %}
-    <style>
-        .profile {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-        }
-    </style>
-    {% block control %}{% endblock %}
-    <div class="profile">
-        <div class="user-auth">
-            {{ form_start(form_user) }}
-            {{ form_end(form_user) }}
+    {% set user = app.user %}
 
-            <div>Username: {{ user.getUsername() }}</div>
-            <div>Email: {{ user.getEmail() }}</div>
+    <div class="container-sm p-5 d-flex" style="flex-direction: column;">
+        <div class="d-flex" style="column-gap: 40px; row-gap: 40px;">
+            <div style="width: 128px; height: 128px; border-radius: 12px; background: #e2e2e2;"></div>
+            <div>
+                <div style="display: flex; column-gap: 30px; align-items: end">
+                    <h1>{{ user.getUserIdentifier() }}</h1>
+                    <p class="text-muted">{{ user.getEmail() }}</p>
+                </div>
+                <h3>{% if profile.getFirstname() is null and profile.getSecondname() is null %} Имя не указано {% else %} {{ profile.getSecondname() }} {{ profile.getFirstname() }} {% endif %}</h3>
+                <p>{% if profile.getBirthday() is null %} Дата рождения не указана {% else %} {{ profile.getBirthday()|date('Y.m.d') }}  {% endif %}</p>
+            </div>
         </div>
-        <div class="user-info">
-            {{ form_start(form_profile) }}
-            {{ form_end(form_profile) }}
+        <div class="d-flex justify-content-between" style="column-gap: 40px; row-gap: 40px;">
+            <p>Дата регистрации: <b>{{ profile.getCreated()|date('Y.m.d') }}</b></p>
+            <div class="d-flex">
+                <a type="button" class="btn btn-primary" href="{{ path('app_profile_edit') }}">Изменить профиль</a>
+            </div>
         </div>
     </div>
 {% endblock %}
