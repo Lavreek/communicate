@@ -17,7 +17,7 @@ class MessagesController extends AbstractController
     public function apiMessageGet(Request $request, ManagerRegistry $registry): JsonResponse
     {
         $data = $request->request->get('url');
-        if (!preg_match('#/dialogs/with/(\d+)#', $data, $matches)) {
+        if (!preg_match('#\/dialogs\/with\/(\d+)#', $data, $matches)) {
             return new JsonResponse();
         }
 
