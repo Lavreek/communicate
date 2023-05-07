@@ -35,6 +35,7 @@ $(document).ready(function () {
                 method: 'POST',
                 url: '/api/message/get',
                 data: "url=" + document.location.href,
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
 
                 success: function (response) {
                     for (let i = 0; i < response.messages.length; i++) {
